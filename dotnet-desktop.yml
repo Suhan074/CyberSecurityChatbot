@@ -1,0 +1,25 @@
+# dotnet-desktop.yml
+
+# Configuration for building and deploying the .NET desktop application
+
+# Ensure all environment variables are properly referenced
+
+variables:
+  Configuration: 'Debug'
+  OutputDirectory: 'bin/${{ variables.Configuration }}'
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(Configuration) --output $(OutputDirectory)'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Building the project with MSBuild..."
+      msbuild /p:Configuration=$(Configuration) /p:OutputPath=$(OutputDirectory) /p:Platform='Any CPU' ./YourProject.csproj
+
+# Additional steps can be added here
