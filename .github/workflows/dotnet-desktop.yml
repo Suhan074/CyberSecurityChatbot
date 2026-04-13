@@ -1,0 +1,19 @@
+name: .NET Build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - run: dotnet restore CyberSecurityChatbot.csproj
+    - run: dotnet build CyberSecurityChatbot.csproj --configuration Release --no-restore
